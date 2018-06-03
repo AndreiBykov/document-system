@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Documents</title>
+</head>
+<body>
+<table>
+
+    <a href="/">Загрузка документов</a><nobr/>
+    <form action="" method="get">
+        <label>Поиск строки:</label>
+        <input name="query"/>
+        <input type="submit"/>
+    </form>
+    <br/>
+
+    <label th:if="${query == null || query.isEmpty()}">Список всех документов:</label>
+    <label th:unless="${query == null || query.isEmpty()}"
+           th:text="Список документов для поискового запроса '${query}':"></label>
+    <tr>
+        <td>Имя файла</td>
+        <td>Дата и время загрузки</td>
+        <td>Процент плагиата</td>
+    </tr>
+    <tr th:each="doc : ${documents}">
+        <td><a th:text="${doc.filename}" th:href="@{'/document/' + ${doc.id}}" target="_blank"></a></td>
+        <td th:text="${doc.uploadDateTime}"></td>
+        <td th:text="${doc.plagiarism}"></td>
+    </tr>
+</table>
+</body>
+</html>
